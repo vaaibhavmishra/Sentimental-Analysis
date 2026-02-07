@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodify - AI Mood Detector</title>
+  <link rel="icon" href="Logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="Mood2.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Mood Detector</h1>
+    <p class="subtitle">Enter your thoughts or upload a CSV file to analyze sentiments instantly.</p>
+
+    <div class="box-container">
+      <!-- Input Box for Single Mood Detection -->
+      <div class="input-box">
+        <input type="text" id="mood-input" placeholder="How are you feeling today?" class="text-field" autocomplete="off">
+        <button onclick="detectMood()">Detect Mood</button>
+      </div>
+
+      <!-- Upload Box for CSV Analysis -->
+      <div class="upload-box">
+        <label for="csv-file" class="upload-label">
+          Click to upload CSV
+        </label>
+        <p>Supported file: .csv</p>
+        <input type="file" id="csv-file" accept=".csv">
+
+        <button onclick="analyzeCSV()">Analyze File</button>
+      </div>
+    </div>
+
+    <!-- Output Box -->
+    <div class="output">
+      <textarea id="out-put" cols="50" rows="10" placeholder="Results will appear here..." readonly></textarea>
+    </div>
+    
+    <a href="/" class="back-link">&larr; Back to Home</a>
+  </div>
+
+  <script>
+    // Function to detect mood from text input
+    async function detectMood() {
+      const text = document.getElementById("mood-input").value;
+      const output = document.getElementById("out-put");
+
+      if (!text) {
+        alert("Please enter text to detect your mood.");
+        return;
+      }
+      
+      output.value = "Analyzing...";
+
+      try {
+        const response = await fetch('/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text }),
+        });
+
+        const result = await response.json();
+        output.value = `YOUR CURRENT MOOD IS: ${result.sentiment}`;
+      } catch (error) {
+        output.value = "Error: Unable to detect mood.";
+        console.error(error);
+      }
+    }
+
+    // Function to analyze the uploaded CSV file
+    async function analyzeCSV() {
+      const fileInput = document.getElementById("csv-file");
+      const file = fileInput.files[0];
+      const output = document.getElementById("out-put");
+
+      if (!file) {
+        alert("Please upload a CSV file.");
+        return;
+      }
+      
+      output.value = "Processing file...";
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('/upload_csv', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.error) {
+          output.value = `Error: ${result.error}`;
+        } else {
+          const sentimentCounts = result.sentiment_counts;
+          const analysis = `CSV SENTIMENT ANALYSIS REPORT:\n
+• Very Positive:  ${sentimentCounts['Very Positive']}
+• Positive:       ${sentimentCounts['Positive']}
+• Neutral:        ${sentimentCounts['Neutral']}
+• Negative:       ${sentimentCounts['Negative']}
+• Very Negative:  ${sentimentCounts['Very Negative']}`;
+          output.value = analysis;
+        }
+      } catch (error) {
+        output.value = "Error: Unable to analyze the CSV file.";
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
