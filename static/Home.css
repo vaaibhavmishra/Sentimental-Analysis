@@ -53,8 +53,12 @@ header .logo {
     font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: var(--text-main);
+    gap: 4px;
+    color: #027BFF;
+}
+
+.logo-text {
+    margin-top: 10px;
 }
 
 header .logo img {
@@ -326,10 +330,10 @@ footer {
 footer .logo {
     font-family: var(--font-heading);
     font-size: 1.25rem;
-    color: var(--primary-color);
+    color: #027BFF;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 4px;
 }
 
 footer .logo img {
