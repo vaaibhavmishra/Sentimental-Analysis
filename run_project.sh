@@ -10,5 +10,5 @@ source venv/bin/activate
 echo "Installing dependencies..."
 pip install -r requirements.txt
 
-echo "Running the application..."
-python app1.py
+echo "Starting Sentivista..."
+python run.py

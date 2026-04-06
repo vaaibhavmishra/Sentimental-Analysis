@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Analyze sentiment of text or CSV files using AI-powered BERT model.">
+    <title>Sentivista — Sentiment Analyzer</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.svg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analyzer.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container" id="analyzer-container">
+        <h1>Sentiment Analyzer</h1>
+        <p class="subtitle">Enter your thoughts or upload a CSV file to analyze sentiments instantly.</p>
+
+        <div class="box-container">
+            <!-- Single Text Analysis -->
+            <div class="input-box" id="text-analysis-box">
+                <div class="box-label">💬 Text Analysis</div>
+                <input type="text" id="mood-input" placeholder="How are you feeling today?" class="text-field" autocomplete="off" maxlength="5000">
+                <div class="char-count"><span id="char-count">0</span> / 5000</div>
+                <button id="detect-btn" onclick="detectMood()">Detect Sentiment</button>
+
+                <!-- Real-time indicator -->
+                <div id="realtime-result" class="realtime-result hidden">
+                    <span id="realtime-emoji" class="realtime-emoji"></span>
+                    <span id="realtime-label" class="realtime-label"></span>
+                    <div id="realtime-bar" class="confidence-bar-mini">
+                        <div id="realtime-bar-fill" class="confidence-bar-fill-mini"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSV Upload Analysis -->
+            <div class="upload-box" id="csv-analysis-box">
+                <div class="box-label">📊 CSV Analysis</div>
+                <label for="csv-file" class="upload-label" id="upload-label">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    Click to upload CSV
+                </label>
+                <p class="upload-hint">Supported: .csv with a "Review" column</p>
+                <p id="file-name" class="file-name hidden"></p>
+                <input type="file" id="csv-file" accept=".csv">
+                <button id="analyze-btn" onclick="analyzeCSV()">Analyze File</button>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p id="loading-text">Analyzing...</p>
+        </div>
+
+        <!-- Single Text Result -->
+        <div id="single-result" class="single-result hidden">
+            <div id="result-emoji" class="result-emoji"></div>
+            <div id="result-label" class="result-label"></div>
+            <div class="confidence-bar-container">
+                <div class="confidence-label">Confidence</div>
+                <div class="confidence-bar">
+                    <div id="confidence-fill" class="confidence-fill"></div>
+                </div>
+                <div id="confidence-value" class="confidence-value"></div>
+            </div>
+        </div>
+
+        <!-- CSV Results -->
+        <div id="csv-results" class="csv-results hidden">
+            <div class="csv-results-header">
+                <h2>Analysis Results</h2>
+                <div class="csv-actions">
+                    <button id="export-btn" class="btn-secondary" onclick="exportCSV()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="csv-summary">
+                <div class="summary-stat" id="stat-total">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Total Reviews</div>
+                </div>
+                <div class="summary-stat" id="stat-positive">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Positive</div>
+                </div>
+                <div class="summary-stat" id="stat-negative">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Negative</div>
+                </div>
+                <div class="summary-stat" id="stat-errors">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Errors</div>
+                </div>
+            </div>
+
+            <div class="chart-table-container">
+                <div class="chart-container">
+                    <canvas id="sentiment-chart"></canvas>
+                </div>
+                <div class="table-container">
+                    <table id="results-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Review</th>
+                                <th>Sentiment</th>
+                                <th>Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <a href="{{ url_for('main.home') }}" class="back-link" id="back-home">&larr; Back to Home</a>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/analyzer.js') }}"></script>
+</body>
+</html>

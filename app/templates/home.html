@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sentivista — AI-powered sentiment analysis using BERT. Analyze text and CSV reviews instantly.">
+    <title>Sentivista — AI Sentiment Analysis</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.svg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+    <header id="site-header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Sentivista Logo">
+            <span class="logo-text">entivista</span>
+        </div>
+        <a href="{{ url_for('main.analyzer') }}" class="btn" id="launch-app-btn">Launch App</a>
+    </header>
+
+    <main>
+        <div class="hero-content">
+            <h1 class="head">
+                Harnessing Machine Learning for <br> Sentiment Analysis
+            </h1>
+            <div class="sub-head">
+                <p>
+                    By leveraging natural language processing and advanced algorithms, we extract meaningful insights from social media, reviews, and text — enhancing our understanding of public opinion and consumer behavior.
+                </p>
+                <br>
+                <a href="{{ url_for('main.analyzer') }}" class="btn" id="try-now-btn">Try it now</a>
+
+                <details id="learn-more">
+                    <summary>Learn More</summary>
+                    <p>
+                        Discover the power of emotions with our cutting-edge Sentiment Analysis model. By leveraging advanced
+                        machine learning techniques, our system analyzes text data to identify sentiments like positive, negative,
+                        or neutral, enabling businesses to understand customer feedback, enhance user experiences,
+                        and make data-driven decisions. Experience the future of emotional intelligence in action!
+                    </p>
+                </details>
+            </div>
+        </div>
+    </main>
+
+    <section class="section-container" id="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="grid-container">
+            <article class="card">
+                <div class="card-number">1</div>
+                <img src="{{ url_for('static', filename='images/upload.png') }}" alt="Upload Icon">
+                <h3>Upload Content</h3>
+                <p>Simply type text or upload a CSV file to our platform for instant analysis.</p>
+            </article>
+
+            <article class="card">
+                <div class="card-number">2</div>
+                <img src="{{ url_for('static', filename='images/AI.png') }}" alt="AI Analysis Icon">
+                <h3>ML Analysis</h3>
+                <p>Our advanced multi-layer BERT model processes and classifies sentiment with high confidence.</p>
+            </article>
+
+            <article class="card">
+                <div class="card-number">3</div>
+                <img src="{{ url_for('static', filename='images/message.png') }}" alt="Report Icon">
+                <h3>Detailed Report</h3>
+                <p>Receive comprehensive results with confidence scores, charts, and exportable data.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section-container" id="applications">
+        <h2 class="section-title">Real World Applications</h2>
+        <div class="grid-container">
+            <article class="card">
+                <h3>Market Research</h3>
+                <p>Analyze feedback from surveys, social media, and reviews to tailor marketing strategies and product offerings.</p>
+            </article>
+
+            <article class="card">
+                <h3>Customer Support</h3>
+                <p>Prioritize support tickets based on sentiment — quickly identify frustrated customers and improve satisfaction.</p>
+            </article>
+
+            <article class="card">
+                <h3>Employee Feedback</h3>
+                <p>Assess workplace morale and engagement levels through sentiment analysis of employee reviews and feedback.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section-container" id="about">
+        <h2 class="section-title">About Us</h2>
+        <div class="team-container">
+            <div class="team-card">
+                <div class="team-header">
+                    <h3>Team Members</h3>
+                </div>
+                <div class="team-body">
+                    <ul class="team-list">
+                        <li>Avni Sharma</li>
+                        <li>Vidhika Rastogi</li>
+                        <li>Vaibhav Mishra</li>
+                        <li>Shreeram Susekhar Pani</li>
+                        <li>Rajhav Bhadwal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="team-header">
+                    <h3>Mentors &amp; Reviewers</h3>
+                </div>
+                <div class="team-body">
+                    <ul class="team-list">
+                        <li><strong>Supervisor</strong> Dr. Garima Jain</li>
+                        <li><strong>Reviewer 1</strong> Dr. J. Subash Chandra Bose</li>
+                        <li><strong>Reviewer 2</strong> Dr. Raghvendra Mishra</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="site-footer">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo">
+            <span class="logo-text">entivista</span>
+        </div>
+        <p>
+            <small>&copy; 2025 Sentivista. All Rights reserved.</small>
+        </p>
+    </footer>
+</body>
+</html>
